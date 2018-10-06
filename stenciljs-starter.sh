@@ -56,13 +56,12 @@ NAME OF PROJECT: ' NAME
 	    	cp ../../starter-files/services-files/stenciljs/base.yml ./docker-compose-dev.yml
 	    	cat ../../starter-files/services-files/stenciljs/dev/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-dev.yml
 	    	
+	    	cp ../../starter-files/services-files/stenciljs/base.yml ./docker-compose-prod.yml
+	    	cat ../../starter-files/services-files/stenciljs/prod/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-prod.yml
+	    	
 	    	if [ $LETSENCRYPT == 'yes' ];then
-	    		cp ../../starter-files/services-files/stenciljs/base-letsencrypt.yml ./docker-compose-prod.yml
-	    		cat ../../starter-files/services-files/stenciljs/prod/stenciljs-letsencrypt.yml | sed 's/$NAME/'$NAME'/' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod.yml
-
-			else
-				cp ../../starter-files/services-files/stenciljs/base.yml ./docker-compose-prod.yml
-	    		cat ../../starter-files/services-files/stenciljs/prod/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-prod.yml
+	    		cp ../../starter-files/services-files/stenciljs/base-letsencrypt.yml ./docker-compose-prod-letsencrypt.yml
+	    		cat ../../starter-files/services-files/stenciljs/prod/stenciljs-letsencrypt.yml | sed 's/$NAME/'$NAME'/' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod-letsencrypt.yml
 			fi
 
 	    else

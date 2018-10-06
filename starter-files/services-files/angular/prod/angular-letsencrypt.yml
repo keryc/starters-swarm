@@ -1,7 +1,7 @@
   
 
   angular_$NAME:
-    image: repo.treescale.com/kerycdiaz/angular-starter:latest
+    image: angular-starter:latest
     environment:
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
       - LETSENCRYPT_HOST=$LETSENCRYPT_HOST

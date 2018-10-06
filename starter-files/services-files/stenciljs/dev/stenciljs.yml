@@ -1,7 +1,7 @@
   
 
   stenciljs_$NAME:
-    image: stenciljs-starter
+    image: stenciljs-starter:latest
     volumes:
       - ./src:/ng-app/src
     ports:

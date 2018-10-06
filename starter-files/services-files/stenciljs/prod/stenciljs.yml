@@ -1,7 +1,7 @@
   
 
   stenciljs_$NAME:
-    image: repo.treescale.com/kerycdiaz/stenciljs-starter:latest
+    image: stenciljs-starter:latest
     ports:
       - "4200:80"
     deploy:

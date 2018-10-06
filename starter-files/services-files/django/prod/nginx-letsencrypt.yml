@@ -1,7 +1,7 @@
   
 
   nginx_$NAME:
-    image: repo.treescale.com/kerycdiaz/nginx:1.13.10
+    image: nginx:1.15.5-alpine
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./static:/home/app/server/static

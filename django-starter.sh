@@ -77,12 +77,12 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 
 	    	cp ../../starter-files/services-files/django/dev/base.yml ./docker-compose-dev.yml
 
+	    	cp ../../starter-files/services-files/django/prod/base.yml ./docker-compose-prod.yml
+			cat ../../starter-files/services-files/django/prod/nginx.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+
 	    	if [ $LETSENCRYPT == 'yes' ];then
-	    		cp ../../starter-files/services-files/django/prod/base-letsencrypt.yml ./docker-compose-prod.yml
-	    		cat ../../starter-files/services-files/django/prod/nginx-letsencrypt.yml | sed 's/$NAME/'$NAME'/g' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod.yml
-			else
-				cp ../../starter-files/services-files/django/prod/base.yml ./docker-compose-prod.yml
-				cat ../../starter-files/services-files/django/prod/nginx.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+	    		cp ../../starter-files/services-files/django/prod/base-letsencrypt.yml ./docker-compose-prod-letsencrypt.yml
+	    		cat ../../starter-files/services-files/django/prod/nginx-letsencrypt.yml | sed 's/$NAME/'$NAME'/g' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod-letsencrypt.yml
 			fi
 
 	    	cat ../../starter-files/services-files/django/server-dev.env | sed 's/$NAME/'$NAME'/g' >> ./server-dev.env

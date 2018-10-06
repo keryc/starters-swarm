@@ -1,7 +1,7 @@
   
 
   angular_$NAME:
-    image: repo.treescale.com/kerycdiaz/angular-starter:latest
+    image: angular-starter:latest
     ports:
       - "4200:80"
     deploy:

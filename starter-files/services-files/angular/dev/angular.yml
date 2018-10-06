@@ -1,7 +1,7 @@
   
 
   angular_$NAME:
-    image: angular-starter
+    image: angular-starter:latest
     volumes:
       - ./src:/ng-app/src
     ports:

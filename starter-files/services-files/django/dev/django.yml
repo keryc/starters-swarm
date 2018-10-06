@@ -1,7 +1,7 @@
   
 
   server_$NAME:
-    image: django-starter
+    image: django-starter:latest
     env_file: 'server-dev.env'
     volumes:
       - .:/home/app/server

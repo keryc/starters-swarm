@@ -1,7 +1,7 @@
   
 
   stenciljs_$NAME:
-    image: repo.treescale.com/kerycdiaz/stenciljs-starter:latest
+    image: stenciljs-starter:latest
     environment:
       - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
       - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
