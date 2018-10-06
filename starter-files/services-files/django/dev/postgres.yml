@@ -1,0 +1,10 @@
+  
+
+  database_$NAME:
+    image: postgres:10.5-alpine
+    environment:
+      - POSTGRES_USER=user_example
+      - POSTGRES_PASSWORD=pass_example
+      - POSTGRES_DB=db_example
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data/

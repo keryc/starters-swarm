@@ -1,0 +1,22 @@
+  
+
+  nginx_$NAME:
+    image: repo.treescale.com/kerycdiaz/nginx:1.13.10
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/home/app/server/static
+      - ./media:/home/app/server/media
+    environment:
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
+      - LETSENCRYPT_TEST=$LETSENCRYPT_TEST
+      - VIRTUAL_HOST=$LETSENCRYPT_HOST
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s

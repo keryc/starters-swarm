@@ -1,0 +1,10 @@
+  
+
+  rabbitmq_$NAME:
+    image: rabbitmq:3.7.4-rc.4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "c3b1t9"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "5672:5672"

@@ -1,0 +1,9 @@
+  
+
+  stenciljs_$NAME:
+    image: stenciljs-starter
+    volumes:
+      - ./src:/ng-app/src
+    ports:
+      - "4200:4200"
+    command: "npm start --host 0.0.0.0 --port 4200"

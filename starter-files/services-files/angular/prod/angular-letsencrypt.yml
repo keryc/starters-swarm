@@ -1,0 +1,18 @@
+  
+
+  angular_$NAME:
+    image: repo.treescale.com/kerycdiaz/angular-starter:latest
+    environment:
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
+      - LETSENCRYPT_TEST=$LETSENCRYPT_TEST
+      - VIRTUAL_HOST=$LETSENCRYPT_HOST
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s

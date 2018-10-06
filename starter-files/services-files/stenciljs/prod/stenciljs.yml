@@ -1,0 +1,15 @@
+  
+
+  stenciljs_$NAME:
+    image: repo.treescale.com/kerycdiaz/stenciljs-starter:latest
+    ports:
+      - "4200:80"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s

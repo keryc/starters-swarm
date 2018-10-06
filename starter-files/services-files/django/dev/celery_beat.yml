@@ -1,0 +1,8 @@
+  
+
+  celery_beat_$NAME:
+    image: django-starter
+    env_file: "server-dev.env"
+    command: bash -c "/home/app/server/wait-for-it.sh rabbitmq_$NAME:5672:5672 && celery -A $NAME beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    volumes:
+      - .:/home/app/server

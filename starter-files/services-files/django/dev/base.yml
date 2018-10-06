@@ -1,0 +1,9 @@
+version: "3.7"
+
+volumes:
+  msdata-dev:
+    driver: local
+  pgdata-dev:
+    driver: local
+    
+services:

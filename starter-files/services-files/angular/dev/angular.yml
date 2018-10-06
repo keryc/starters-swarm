@@ -1,0 +1,9 @@
+  
+
+  angular_$NAME:
+    image: angular-starter
+    volumes:
+      - ./src:/ng-app/src
+    ports:
+      - "4200:4200"
+    command: "./node_modules/.bin/ng serve --host 0.0.0.0"
