@@ -13,8 +13,9 @@ case $db in
 
 		read -p '
 NAME OF PROJECT: ' NAME
+		NAME="${NAME,,}"
 
-		if [ ! -d $NAME ]; then
+		if [ ! -d 'projects/'$NAME'' ]; then
 			read -p '
 ADMIN (USERNAME): ' ADMIN_USERNAME
 
@@ -114,10 +115,16 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 				"postgres")
 					cat ../../starter-files/services-files/django/dev/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat ../../starter-files/services-files/django/prod/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+					if [ $LETSENCRYPT == 'yes' ];then
+			    		cat ../../starter-files/services-files/django/prod/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+					fi
+					
 
 					cat ../../starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 	    			cat ../../starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-
+	    			if [ $LETSENCRYPT == 'yes' ];then
+	    				cat ../../starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+	    			fi
 
 
 				    echo "install psycopg2..."
@@ -133,10 +140,16 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 				"mysql")				
 					cat ../../starter-files/services-files/django/dev/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat ../../starter-files/services-files/django/prod/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+					if [ $LETSENCRYPT == 'yes' ];then
+						cat ../../starter-files/services-files/django/prod/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+					fi
 
 					cat ../../starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 	    			cat ../../starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-				    
+				    if [ $LETSENCRYPT == 'yes' ];then
+				    	cat ../../starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+				    fi
+
 				    echo "install mysqlclient..."
 				    sudo apt-get install libmysqlclient-dev
 				    pip install mysqlclient
@@ -194,10 +207,16 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 				    echo "add service 'celery_worker' to docker-compose-dev.yml"
 					cat ../../starter-files/services-files/django/dev/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat ../../starter-files/services-files/django/prod/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-
+					
+					if [ $LETSENCRYPT == 'yes' ];then
+						cat ../../starter-files/services-files/django/prod/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+					fi
 
 					cat ../../starter-files/services-files/django/dev/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat ../../starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+					if [ $LETSENCRYPT == 'yes' ];then
+						cat ../../starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+					fi
 
 				    break;
 				;;
@@ -226,6 +245,9 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 					echo "add service 'celery_worker' to docker-compose-dev.yml"
 					cat ../../starter-files/services-files/django/dev/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat ../../starter-files/services-files/django/prod/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+					if [ $LETSENCRYPT == 'yes' ];then
+						cat ../../starter-files/services-files/django/prod/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
+				    fi
 				    break;
 				;;
 				[nN])
@@ -237,7 +259,7 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 			cd ../../projects/;sudo rm -R temp-env
 
 	    else
-	    	echo "Django Directory Exists."	
+	    	echo ''$NAME' Directory Exists.'
 		fi
 		
 

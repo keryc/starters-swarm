@@ -13,7 +13,9 @@ case $db in
 		read -p '
 NAME OF PROJECT: ' NAME
 
-		if [ ! -d $NAME ]; then
+		NAME="${NAME,,}"
+
+		if [ ! -d 'projects/'$NAME'' ]; then
 			
 			while true; do
 			read -p 'ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
@@ -66,7 +68,7 @@ NAME OF PROJECT: ' NAME
 			fi
 
 	    else
-	    	echo "$NAME Directory Exists."	
+	    	echo ''$NAME' Directory Exists.'
 		fi
 		
 
