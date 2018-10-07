@@ -6,8 +6,9 @@
       - ./nginx:/etc/nginx/conf.d
       - ./static:/home/app/server/static
       - ./media:/home/app/server/media
-    ports:
-      - "8000:80"
+    labels:
+      - "traefik.frontend.rule=Host:$REVERSE_PROXY_HOST"
+      - "traefik.enable=true"
     deploy:
       replicas: 1
       update_config:

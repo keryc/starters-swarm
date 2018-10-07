@@ -40,38 +40,6 @@ NAME OF PROJECT: ' NAME
 
 			read -p 'ADMIN (PASSWORD): ' ADMIN_PASSWORD
 
-			while true; do
-			read -p '
-ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
-
-			case $drf in
-				[yY][eE][sS]|[yY])
-				    LETSENCRYPT="yes"
-				    read -p 'LETSENCRYPT_EMAIL: ' LETSENCRYPT_EMAIL
-					read -p 'LETSENCRYPT_HOST: ' LETSENCRYPT_HOST
-					while true; do
-						read -p 'LETSENCRYPT TEST  (y/N): ' drf
-
-						case $drf in
-							[yY][eE][sS]|[yY])
-								LETSENCRYPT_TEST="true"
-							    break;
-							;;
-							[nN])
-								LETSENCRYPT_TEST="false"
-							    break;
-							;;
-					esac
-					done
-				    break;
-				;;
-				[nN])
-					LETSENCRYPT="no"
-				    break;
-				;;
-			esac
-			done
-
 			#Install virtualenv and install django, gunicorn
 			sudo pip install virtualenv
 			virtualenv -p python3 temp-env
@@ -96,16 +64,26 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 
 	    	cp $BASEDIR/starter-files/services-files/django/dev/base.yml ./docker-compose-dev.yml
 
-	    	cp $BASEDIR/starter-files/services-files/django/prod/base.yml ./docker-compose-prod.yml
-			cat $BASEDIR/starter-files/services-files/django/prod/nginx.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
+	    	while true; do
+			read -p '
+REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
+			
+			read -p 'REVERSE PROXY HOST: ' REVERSE_PROXY_HOST
 
-	    	if [ $LETSENCRYPT == 'yes' ];then
-	    		cp $BASEDIR/starter-files/services-files/django/prod/base-letsencrypt.yml ./docker-compose-prod-letsencrypt.yml
-	    		cat $BASEDIR/starter-files/services-files/django/prod/nginx-letsencrypt.yml | sed 's/$NAME/'$NAME'/g' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod-letsencrypt.yml
-			fi
-
-	    	cat $BASEDIR/starter-files/services-files/django/server-dev.env | sed 's/$NAME/'$NAME'/g' >> ./server-dev.env
-	    	cat $BASEDIR/starter-files/services-files/django/server-prod.env | sed 's/$NAME/'$NAME'/g' >> ./server-prod.env
+			case $proxy in
+				"nginx")
+					read -p 'REVERSE PROXY EMAIL: ' REVERSE_PROXY_EMAIL
+					cp $BASEDIR/starter-files/services-files/django/prod/base-nginx.yml ./docker-compose-prod.yml
+	    			cat $BASEDIR/starter-files/services-files/django/prod/nginx-nginx.yml | sed 's/$NAME/'$NAME'/' | sed 's/$REVERSE_PROXY_EMAIL/'$REVERSE_PROXY_EMAIL'/' | sed 's/$REVERSE_PROXY_HOST/'$REVERSE_PROXY_HOST'/' >> ./docker-compose-prod.yml
+				    break;
+				;;
+				"traefik")				
+					cp $BASEDIR/starter-files/services-files/django/prod/base-traefik.yml ./docker-compose-prod.yml
+	    			cat $BASEDIR/starter-files/services-files/django/prod/nginx-traefik.yml | sed 's/$NAME/'$NAME'/' | sed 's/$REVERSE_PROXY_HOST/'$REVERSE_PROXY_HOST'/' >> ./docker-compose-prod.yml
+				    break;
+				;;
+			esac
+			done
 
 
 	    	# Split django configuration into states
@@ -133,16 +111,12 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 				"postgres")
 					cat $BASEDIR/starter-files/services-files/django/dev/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-					if [ $LETSENCRYPT == 'yes' ];then
-			    		cat $BASEDIR/starter-files/services-files/django/prod/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-					fi
+					
 					
 
 					cat $BASEDIR/starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 	    			cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-	    			if [ $LETSENCRYPT == 'yes' ];then
-	    				cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-	    			fi
+	    			
 
 
 				    echo "install psycopg2..."
@@ -158,15 +132,11 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 				"mysql")				
 					cat $BASEDIR/starter-files/services-files/django/dev/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-					if [ $LETSENCRYPT == 'yes' ];then
-						cat $BASEDIR/starter-files/services-files/django/prod/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-					fi
+					
 
 					cat $BASEDIR/starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 	    			cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-				    if [ $LETSENCRYPT == 'yes' ];then
-				    	cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-				    fi
+				    
 
 				    echo "install mysqlclient..."
 				    sudo apt-get install libmysqlclient-dev
@@ -226,15 +196,11 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 					cat $BASEDIR/starter-files/services-files/django/dev/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
-					if [ $LETSENCRYPT == 'yes' ];then
-						cat $BASEDIR/starter-files/services-files/django/prod/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-					fi
+					
 
 					cat $BASEDIR/starter-files/services-files/django/dev/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-					if [ $LETSENCRYPT == 'yes' ];then
-						cat $BASEDIR/starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-					fi
+					
 
 				    break;
 				;;
@@ -263,9 +229,7 @@ ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
 					echo "add service 'celery_worker' to docker-compose-dev.yml"
 					cat $BASEDIR/starter-files/services-files/django/dev/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
-					if [ $LETSENCRYPT == 'yes' ];then
-						cat $BASEDIR/starter-files/services-files/django/prod/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod-letsencrypt.yml
-				    fi
+					
 				    break;
 				;;
 				[nN])

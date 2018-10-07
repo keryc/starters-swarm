@@ -2,8 +2,11 @@
 
   angular_$NAME:
     image: angular-starter:latest
-    ports:
-      - "4200:80"
+    environment:
+      - LETSENCRYPT_TEST=true
+      - LETSENCRYPT_EMAIL=$REVERSE_PROXY_EMAIL
+      - LETSENCRYPT_HOST=$REVERSE_PROXY_HOST
+      - VIRTUAL_HOST=$REVERSE_PROXY_HOST
     deploy:
       replicas: 1
       update_config:

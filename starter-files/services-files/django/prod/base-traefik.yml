@@ -1,0 +1,14 @@
+version: "3.7"
+
+volumes:
+  msdata-prod:
+    driver: local
+  pgdata-prod:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: traefik_net
+    
+services:

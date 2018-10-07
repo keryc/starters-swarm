@@ -36,38 +36,6 @@ NAME OF PROJECT: ' NAME
 		NAME="${NAME,,}"
 
 		if [ ! -d 'projects/'$NAME'' ]; then
-
-			while true; do
-			read -p 'ADD LETSENCRYPT AUTOMATIC (y/N): ' drf
-
-			case $drf in
-				[yY][eE][sS]|[yY])
-				    LETSENCRYPT="yes"
-				    read -p 'LETSENCRYPT_EMAIL: ' LETSENCRYPT_EMAIL
-					read -p 'LETSENCRYPT_HOST: ' LETSENCRYPT_HOST
-					while true; do
-						read -p 'LETSENCRYPT TEST  (y/N): ' drf
-
-						case $drf in
-							[yY][eE][sS]|[yY])
-								LETSENCRYPT_TEST="true"
-							    break;
-							;;
-							[nN])
-								LETSENCRYPT_TEST="false"
-							    break;
-							;;
-					esac
-					done
-				    break;
-				;;
-				[nN])
-					LETSENCRYPT="no"
-				    break;
-				;;
-			esac
-			done
-
 			npm init stencil ionic-pwa -y --name $NAME;cd $NAME
 
 			mkdir nginx; cp $BASEDIR/starter-files/nginx-files/frontend/default.conf ./nginx/default.conf
@@ -77,13 +45,26 @@ NAME OF PROJECT: ' NAME
 	    	cp $BASEDIR/starter-files/services-files/stenciljs/base.yml ./docker-compose-dev.yml
 	    	cat $BASEDIR/starter-files/services-files/stenciljs/dev/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-dev.yml
 	    	
-	    	cp $BASEDIR/starter-files/services-files/stenciljs/base.yml ./docker-compose-prod.yml
-	    	cat $BASEDIR/starter-files/services-files/stenciljs/prod/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-prod.yml
-	    	
-	    	if [ $LETSENCRYPT == 'yes' ];then
-	    		cp $BASEDIR/starter-files/services-files/stenciljs/base-letsencrypt.yml ./docker-compose-prod-letsencrypt.yml
-	    		cat $BASEDIR/starter-files/services-files/stenciljs/prod/stenciljs-letsencrypt.yml | sed 's/$NAME/'$NAME'/' | sed 's/$LETSENCRYPT_EMAIL/'$LETSENCRYPT_EMAIL'/' | sed 's/$LETSENCRYPT_HOST/'$LETSENCRYPT_HOST'/' | sed 's/$LETSENCRYPT_TEST/'$LETSENCRYPT_TEST'/' >> ./docker-compose-prod-letsencrypt.yml
-			fi
+	    	while true; do
+			read -p '
+REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
+			
+			read -p 'REVERSE PROXY HOST: ' REVERSE_PROXY_HOST
+
+			case $proxy in
+				"nginx")
+					read -p 'REVERSE PROXY EMAIL: ' REVERSE_PROXY_EMAIL
+					cp $BASEDIR/starter-files/services-files/stenciljs/base-nginx.yml ./docker-compose-prod.yml
+	    			cat $BASEDIR/starter-files/services-files/stenciljs/prod/stenciljs-nginx.yml | sed 's/$NAME/'$NAME'/' | sed 's/$REVERSE_PROXY_EMAIL/'$REVERSE_PROXY_EMAIL'/' | sed 's/$REVERSE_PROXY_HOST/'$REVERSE_PROXY_HOST'/' >> ./docker-compose-prod.yml
+				    break;
+				;;
+				"traefik")				
+					cp $BASEDIR/starter-files/services-files/stenciljs/base-traefik.yml ./docker-compose-prod.yml
+	    			cat $BASEDIR/starter-files/services-files/stenciljs/prod/stenciljs-traefik.yml | sed 's/$NAME/'$NAME'/' | sed 's/$REVERSE_PROXY_HOST/'$REVERSE_PROXY_HOST'/' >> ./docker-compose-prod.yml
+				    break;
+				;;
+			esac
+			done
 
 	    else
 	    	echo ''$NAME' Directory Exists.'

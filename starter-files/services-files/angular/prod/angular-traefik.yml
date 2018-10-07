@@ -2,11 +2,9 @@
 
   angular_$NAME:
     image: angular-starter:latest
-    environment:
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
-      - LETSENCRYPT_TEST=$LETSENCRYPT_TEST
-      - VIRTUAL_HOST=$LETSENCRYPT_HOST
+    labels:
+      - "traefik.frontend.rule=Host:$REVERSE_PROXY_HOST"
+      - "traefik.enable=true"
     deploy:
       replicas: 1
       update_config:

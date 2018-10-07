@@ -7,10 +7,10 @@
       - ./static:/home/app/server/static
       - ./media:/home/app/server/media
     environment:
-      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
-      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
-      - LETSENCRYPT_TEST=$LETSENCRYPT_TEST
-      - VIRTUAL_HOST=$LETSENCRYPT_HOST
+      - LETSENCRYPT_TEST=true
+      - LETSENCRYPT_EMAIL=$REVERSE_PROXY_EMAIL
+      - LETSENCRYPT_HOST=$REVERSE_PROXY_HOST
+      - VIRTUAL_HOST=$REVERSE_PROXY_HOST
     deploy:
       replicas: 1
       update_config:
