@@ -62,7 +62,9 @@ NAME OF PROJECT: ' NAME
 			chmod +x ./entrypoint.sh
 			
 			cp $BASEDIR/starter-files/shell-files/django/wait-for-it.sh ./wait-for-it.sh
-
+			
+			cat $BASEDIR/starter-files/services-files/django/server-dev.env | sed 's/$NAME/'$NAME'/g' >> ./server-dev.env
+	    	cat $BASEDIR/starter-files/services-files/django/server-prod.env | sed 's/$NAME/'$NAME'/g' >> ./server-prod.env
 
 	    	cp $BASEDIR/starter-files/services-files/django/dev/base.yml ./docker-compose-dev.yml
 
