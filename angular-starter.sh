@@ -40,6 +40,8 @@ NAME OF PROJECT: ' NAME
 			sudo npm install -g @angular/cli
 			ng new $NAME; cd $NAME
 
+			curl https://www.gitignore.io/api/angular > .gitignore
+
 			cp $BASEDIR/starter-files/docker-files/angular/Dockerfile ./Dockerfile
 			mkdir nginx; cp $BASEDIR/starter-files/nginx-files/frontend/default.conf ./nginx/default.conf
 	

@@ -50,6 +50,8 @@ NAME OF PROJECT: ' NAME
 			django-admin startproject $NAME
 			cd $NAME; pip freeze > requirements.txt
 
+			curl https://www.gitignore.io/api/django > .gitignore
+
 			mkdir nginx; cat $BASEDIR/starter-files/nginx-files/backend/default.conf | sed 's/$NAME/'$NAME'/g' >> ./nginx/default.conf 
 
 			cp $BASEDIR/starter-files/docker-files/django/Dockerfile ./Dockerfile
@@ -201,6 +203,7 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 					cat $BASEDIR/starter-files/services-files/django/dev/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
+					curl https://www.gitignore.io/api/django,node > .gitignore
 
 				    break;
 				;;
