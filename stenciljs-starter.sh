@@ -43,7 +43,7 @@ NAME OF PROJECT: ' NAME
 			cp $BASEDIR/starter-files/docker-files/stenciljs/Dockerfile ./Dockerfile
 
 	    	cp $BASEDIR/starter-files/services-files/stenciljs/base.yml ./docker-compose-dev.yml
-	    	cat $BASEDIR/starter-files/services-files/stenciljs/dev/stenciljs.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-dev.yml
+	    	cat $BASEDIR/starter-files/services-files/stenciljs/dev/stenciljs.yml >> ./docker-compose-dev.yml
 	    	
 	    	while true; do
 			read -p '

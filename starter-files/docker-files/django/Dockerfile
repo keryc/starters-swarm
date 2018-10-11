@@ -13,4 +13,3 @@ COPY . $APP_DIR
 WORKDIR $APP_DIR
 
 RUN chmod +x /home/app/server/entrypoint.sh
-EXPOSE 8000

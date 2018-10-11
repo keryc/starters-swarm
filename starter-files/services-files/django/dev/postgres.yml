@@ -1,6 +1,6 @@
   
 
-  database_$NAME:
+  database:
     image: postgres:10.5-alpine
     environment:
       - POSTGRES_USER=user_example

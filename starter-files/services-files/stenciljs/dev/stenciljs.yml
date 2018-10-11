@@ -1,7 +1,9 @@
   
 
-  stenciljs_$NAME:
-    image: stenciljs-starter:latest
+  stenciljs:
+    build:
+      context: .
+      target: builder
     volumes:
       - ./src:/ng-app/src
     ports:

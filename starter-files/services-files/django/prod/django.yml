@@ -1,6 +1,6 @@
 
 
-  server_$NAME:
+  django_$NAME:
     image: django-starter:latest
     env_file: 'server-prod.env'
     volumes:

@@ -1,10 +1,12 @@
   
 
-  server_$NAME:
-    image: django-starter:latest
+  django:
+    build: .
     env_file: 'server-dev.env'
     volumes:
       - .:/home/app/server
     ports:
       - "8000:8000"
     command: bash -c "/home/app/server/entrypoint.sh && python3 manage.py runserver 0.0.0.0:8000"
+    stdin_open: true
+    tty: true

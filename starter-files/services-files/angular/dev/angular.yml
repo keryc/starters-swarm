@@ -1,7 +1,9 @@
   
 
-  angular_$NAME:
-    image: angular-starter:latest
+  angular:
+    build:
+      context: .
+      target: builder
     volumes:
       - ./src:/ng-app/src
     ports:

@@ -66,7 +66,7 @@ NAME OF PROJECT: ' NAME
 			cat $BASEDIR/starter-files/services-files/django/server-dev.env | sed 's/$NAME/'$NAME'/g' >> ./server-dev.env
 	    	cat $BASEDIR/starter-files/services-files/django/server-prod.env | sed 's/$NAME/'$NAME'/g' >> ./server-prod.env
 
-	    	cp $BASEDIR/starter-files/services-files/django/dev/base.yml ./docker-compose-dev.yml
+	    	cp $BASEDIR/starter-files/services-files/django/dev/base.yml ./docker-compose.yml
 
 	    	while true; do
 			read -p '
@@ -113,18 +113,18 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 
 			case $db in
 				"postgres")
-					cat $BASEDIR/starter-files/services-files/django/dev/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					cat $BASEDIR/starter-files/services-files/django/dev/postgres.yml >> ./docker-compose.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/postgres.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
 					
 
-					cat $BASEDIR/starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					cat $BASEDIR/starter-files/services-files/django/dev/django.yml >> ./docker-compose.yml
 	    			cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 	    			
 
 
 				    echo "install psycopg2..."
-				    pip install psycopg2
+				    pip install psycopg2-binary
 				    
 				    echo "config databases in settings..."
 					cat $BASEDIR/starter-files/config-files/django/database-postgres.py >> $NAME/settings/development.py
@@ -134,11 +134,11 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 				    break;
 				;;
 				"mysql")				
-					cat $BASEDIR/starter-files/services-files/django/dev/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					cat $BASEDIR/starter-files/services-files/django/dev/mysql.yml >> ./docker-compose.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/mysql.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
 
-					cat $BASEDIR/starter-files/services-files/django/dev/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					cat $BASEDIR/starter-files/services-files/django/dev/django.yml >> ./docker-compose.yml
 	    			cat $BASEDIR/starter-files/services-files/django/prod/django.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 				    
 
@@ -196,13 +196,13 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 
 				    pip freeze > requirements.txt
 
-				    echo "add service 'celery_worker' to docker-compose-dev.yml"
-					cat $BASEDIR/starter-files/services-files/django/dev/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+				    echo "add service 'celery_worker' to docker-compose.yml"
+					cat $BASEDIR/starter-files/services-files/django/dev/rabbitmq.yml >> ./docker-compose.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/rabbitmq.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
 					
 
-					cat $BASEDIR/starter-files/services-files/django/dev/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					cat $BASEDIR/starter-files/services-files/django/dev/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/celery_worker.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
 					curl https://www.gitignore.io/api/django,node > .gitignore
@@ -231,8 +231,8 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 
 					pip freeze > requirements.txt
 
-					echo "add service 'celery_worker' to docker-compose-dev.yml"
-					cat $BASEDIR/starter-files/services-files/django/dev/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-dev.yml
+					echo "add service 'celery_worker' to docker-compose.yml"
+					cat $BASEDIR/starter-files/services-files/django/dev/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose.yml
 					cat $BASEDIR/starter-files/services-files/django/prod/celery_beat.yml | sed 's/$NAME/'$NAME'/g' >> ./docker-compose-prod.yml
 					
 				    break;

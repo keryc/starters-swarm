@@ -45,8 +45,8 @@ NAME OF PROJECT: ' NAME
 			cp $BASEDIR/starter-files/docker-files/angular/Dockerfile ./Dockerfile
 			mkdir nginx; cp $BASEDIR/starter-files/nginx-files/frontend/default.conf ./nginx/default.conf
 	
-			cp $BASEDIR/starter-files/services-files/angular/base.yml ./docker-compose-dev.yml	
-	    	cat $BASEDIR/starter-files/services-files/angular/dev/angular.yml | sed 's/$NAME/'$NAME'/' >> ./docker-compose-dev.yml
+			cp $BASEDIR/starter-files/services-files/angular/base.yml ./docker-compose.yml	
+	    	cat $BASEDIR/starter-files/services-files/angular/dev/angular.yml >> ./docker-compose.yml
 
 			while true; do
 			read -p '
