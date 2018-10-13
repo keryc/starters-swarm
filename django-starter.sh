@@ -14,22 +14,12 @@ case $db in
 
 		cd projects
 
-		while true; do
-			read -p '
-INSERT IN GROUP  (y/N): ' drf
-
-			case $drf in
-				[yY][eE][sS]|[yY])
-					read -p 'ENTER NAME OF GROUP: ' GROUP
-					GROUP="${GROUP,,}"
-					mkdir -p "$GROUP" && cd "$GROUP";
-					break;
-				;;
-				[nN])
-					break;
-				;;
-		esac
-		done
+		read -p '
+GROUP (Leave blank to not insert in group): ' GROUP
+		GROUP="${GROUP,,}"
+		if [[ ! -z "$GROUP" ]]; then
+			mkdir -p "$GROUP" && cd "$GROUP";
+		fi
 
 		read -p '
 NAME OF PROJECT: ' NAME
@@ -244,6 +234,8 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 			done
 
 			cd ..;sudo rm -R temp-env
+
+			cp $BASEDIR/starter-files/shell-files/initial-docker-ubuntu16.04.sh ./initial-docker-ubuntu16.04.sh
 
 	    else
 	    	echo ''$NAME' Directory Exists.'
