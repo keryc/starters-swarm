@@ -32,8 +32,8 @@ NAME OF PROJECT: ' NAME
 
 			cp $BASEDIR/starter-files/docker-files/stenciljs/Dockerfile ./Dockerfile
 
-	    	cp $BASEDIR/starter-files/services-files/stenciljs/base.yml ./docker-compose-dev.yml
-	    	cat $BASEDIR/starter-files/services-files/stenciljs/dev/stenciljs.yml >> ./docker-compose-dev.yml
+	    	cp $BASEDIR/starter-files/services-files/stenciljs/base.yml ./docker-compose.yml
+	    	cat $BASEDIR/starter-files/services-files/stenciljs/dev/stenciljs.yml >> ./docker-compose.yml
 	    	
 	    	while true; do
 			read -p '
