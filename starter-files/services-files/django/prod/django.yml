@@ -6,7 +6,9 @@
     volumes:
       - ./static:/home/app/server/static
       - ./media:/home/app/server/media
-    command: bash -c "./entrypoint.sh && gunicorn $NAME.wsgi -b 0.0.0.0:8000"
+    command: >
+      sh -c "/home/app/server/entrypoint.sh &&
+             gunicorn $NAME.wsgi -b 0.0.0.0:8000"
     deploy:
       replicas: 2
       update_config:

@@ -3,7 +3,10 @@
   celery_worker_$NAME:
     image: django-starter:latest
     env_file: "server-dev.env"
-    command: bash -c "/home/app/server/wait-for-it.sh rabbitmq_$NAME:5672:5672 && celery -A $NAME worker -l info"
+    command: >
+      sh -c "/home/app/server/entrypoint.sh &&
+             /home/app/server/wait-for-it.sh rabbitmq:5672:5672 &&
+             celery -A $NAME worker -l info"
     volumes:
       - .:/home/app/server
     deploy:

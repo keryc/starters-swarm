@@ -1,6 +1,7 @@
   
 
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3.7.8-alpine
     environment:
       RABBITMQ_DEFAULT_USER: "rabbitmq"

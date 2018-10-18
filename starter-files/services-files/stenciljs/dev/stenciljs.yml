@@ -1,6 +1,7 @@
   
 
   stenciljs:
+    container_name: angular
     build:
       context: .
       target: builder
@@ -9,3 +10,5 @@
     ports:
       - "4200:4200"
     command: "npm start --host 0.0.0.0 --port 4200"
+    stdin_open: true
+    tty: true

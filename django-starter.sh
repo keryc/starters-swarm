@@ -51,7 +51,7 @@ NAME OF PROJECT: ' NAME
 			cat $BASEDIR/starter-files/shell-files/django/entrypoint.sh | sed 's/$ADMIN_USERNAME/'$ADMIN_USERNAME'/g' | sed 's/$ADMIN_PASSWORD/'$ADMIN_PASSWORD'/g' >> ./entrypoint.sh
 			chmod +x ./entrypoint.sh
 			
-			cp $BASEDIR/starter-files/shell-files/django/wait-for-it.sh ./wait-for-it.sh
+			cp $BASEDIR/starter-files/shell-files/wait-for-it.sh ./wait-for-it.sh
 			
 			cat $BASEDIR/starter-files/services-files/django/server-dev.env | sed 's/$NAME/'$NAME'/g' >> ./server-dev.env
 	    	cat $BASEDIR/starter-files/services-files/django/server-prod.env | sed 's/$NAME/'$NAME'/g' >> ./server-prod.env
@@ -232,10 +232,12 @@ REVERSE PROXY WITH LETSENCRYPT (nginx or traefik): ' proxy
 				;;
 			esac
 			done
+			
+			cp $BASEDIR/starter-files/shell-files/initial-docker-ubuntu16.04.sh ./initial-docker-ubuntu16.04.sh
 
 			cd ..;sudo rm -R temp-env
 
-			cp $BASEDIR/starter-files/shell-files/initial-docker-ubuntu16.04.sh ./initial-docker-ubuntu16.04.sh
+			
 
 	    else
 	    	echo ''$NAME' Directory Exists.'

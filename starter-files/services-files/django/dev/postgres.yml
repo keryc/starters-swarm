@@ -1,6 +1,7 @@
   
 
   database:
+    container_name: postgres
     image: postgres:10.5-alpine
     environment:
       - POSTGRES_USER=user_example

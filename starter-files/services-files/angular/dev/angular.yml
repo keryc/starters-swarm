@@ -1,6 +1,7 @@
   
 
   angular:
+    container_name: angular
     build:
       context: .
       target: builder
@@ -9,3 +10,5 @@
     ports:
       - "4200:4200"
     command: "./node_modules/.bin/ng serve --host 0.0.0.0"
+    stdin_open: true
+    tty: true

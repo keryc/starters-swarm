@@ -1,6 +1,7 @@
   
 
   database:
+    container_name: mysql
     image: mysql:5.7.23
     environment:
       MYSQL_ROOT_PASSWORD: pass_example
