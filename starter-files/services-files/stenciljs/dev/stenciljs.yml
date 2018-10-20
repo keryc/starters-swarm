@@ -1,7 +1,7 @@
   
 
   stenciljs:
-    container_name: angular
+    container_name: stenciljs
     build:
       context: .
       target: builder

@@ -1,5 +1,4 @@
 #!/bin/bash
-
 while true; do
 read -p """
 CREATE PROJECT:
@@ -12,8 +11,8 @@ case $db in
 	"1")
 		BASEDIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-		cd projects
-
+		cd ~; mkdir -p projects; cd projects
+		
 		read -p '
 GROUP (Leave blank to not insert in group): ' GROUP
 		GROUP="${GROUP,,}"
@@ -41,7 +40,7 @@ NAME OF PROJECT: ' NAME
 			cd $NAME; pip freeze > requirements.txt
 
 			curl https://www.gitignore.io/api/django > .gitignore
-
+			echo $BASEDIR
 			mkdir nginx; cat $BASEDIR/starter-files/nginx-files/backend/default.conf | sed 's/$NAME/'$NAME'/g' >> ./nginx/default.conf 
 
 			cp $BASEDIR/starter-files/docker-files/django/Dockerfile ./Dockerfile

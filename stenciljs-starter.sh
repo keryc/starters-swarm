@@ -12,7 +12,7 @@ case $db in
 	"1")
 		BASEDIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-		cd projects
+		cd ~; mkdir -p projects; cd projects
 
 		read -p '
 GROUP (Leave blank to not insert in group): ' GROUP
