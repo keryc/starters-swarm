@@ -85,7 +85,7 @@ case $db in
 		cat $CONFIG_FILES/database-mysql.py >> $BACKEND/backend/settings/development.py
 		cat $CONFIG_FILES/database-mysql.py >> $BACKEND/backend/settings/production.py
 
-		pipenv run freeze > $BACKEND/requirements.txt
+		pipenv run pip freeze > $BACKEND/requirements.txt
 		break;
 	;;
 esac
@@ -104,7 +104,7 @@ case $drf in
 		cat $CONFIG_FILES/djangorestframework.py >> $BACKEND/backend/settings/development.py
 		cat $CONFIG_FILES/djangorestframework.py >> $BACKEND/backend/settings/production.py
 
-		pipenv run freeze > $BACKEND/requirements.txt
+		pipenv run pip freeze > $BACKEND/requirements.txt
 	    break;
 	;;
 	[nN])
@@ -129,7 +129,7 @@ case $drf in
 
 		cat $CONFIG_FILES/celeryfile.py >> $BACKEND/backend/celery.py   
 
-	    pipenv run freeze > $BACKEND/requirements.txt
+	    pipenv run pip freeze > $BACKEND/requirements.txt
 
 	    echo "add service 'celery_worker' to docker-compose.yml"
 		cat $SERVICES_FILES/dev/rabbitmq.yml >> $BACKEND/docker-compose.yml
