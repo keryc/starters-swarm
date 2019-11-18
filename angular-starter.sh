@@ -17,14 +17,12 @@ case $db in
 		
 		read -p '
 GROUP (Leave blank to not insert in group): ' GROUP
-		GROUP="${GROUP,,}"
 		if [[ ! -z "$GROUP" ]]; then
 			mkdir -p "$GROUP" && cd "$GROUP";
 		fi
 
 		read -p '
-NAME OF PROJECT: ' NAME
-			NAME="${NAME,,}"			
+NAME OF PROJECT: ' NAME			
 
 
 		if [ ! -d 'projects/'$NAME'' ]; then

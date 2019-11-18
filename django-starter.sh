@@ -15,14 +15,12 @@ case $db in
 		
 		read -p '
 GROUP (Leave blank to not insert in group): ' GROUP
-		GROUP="${GROUP,,}"
 		if [[ ! -z "$GROUP" ]]; then
 			mkdir -p "$GROUP" && cd "$GROUP";
 		fi
 
 		read -p '
 NAME OF PROJECT: ' NAME
-		NAME="${NAME,,}"
 
 		if [ ! -d $NAME ]; then
 			read -p 'ADMIN (USERNAME): ' ADMIN_USERNAME
@@ -30,7 +28,7 @@ NAME OF PROJECT: ' NAME
 			read -p 'ADMIN (PASSWORD): ' ADMIN_PASSWORD
 
 			#Install virtualenv and install django, gunicorn
-			sudo pip install virtualenv
+			sudo pip3 install virtualenv
 			virtualenv -p python3 temp-env
 			source temp-env/bin/activate
 			pip install django gunicorn
