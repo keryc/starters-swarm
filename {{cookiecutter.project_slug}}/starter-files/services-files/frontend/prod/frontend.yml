@@ -1,0 +1,30 @@
+version: "3.7"
+
+networks:
+  default:
+    external:
+      name: {{ cookiecutter.reverse_proxy }}_net
+
+services:
+  {{ cookiecutter.frontend }}_frontend:
+    image: {{ cookiecutter.frontend }}-starter:latest
+    {% if cookiecutter.reverse_proxy == 'nginx' %}
+    environment:
+      - LETSENCRYPT_TEST=true
+      - LETSENCRYPT_EMAIL={{ cookiecutter.reverse_proxy_mail }}
+      - LETSENCRYPT_HOST={{ cookiecutter.reverse_proxy_host }}
+      - VIRTUAL_HOST={{ cookiecutter.reverse_proxy_host }}
+    {% else %}
+    labels:
+      - "traefik.frontend.rule=Host:{{ cookiecutter.reverse_proxy_host }}"
+      - "traefik.enable=true"
+    {% endif %}
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s

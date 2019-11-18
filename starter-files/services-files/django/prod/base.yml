@@ -1,9 +1,0 @@
-version: "3.7"
-
-volumes:
-  msdata-prod:
-    driver: local
-  pgdata-prod:
-    driver: local
-    
-services:
