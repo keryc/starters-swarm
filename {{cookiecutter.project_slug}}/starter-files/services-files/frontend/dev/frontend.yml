@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:  
+  {{ cookiecutter.frontend }}:
+    container_name: {{ cookiecutter.frontend }}
+    build:
+      context: .
+      target: builder
+    volumes:
+      - ./src:/ng-app/src
+    ports:
+      - "4200:4200"
+    {% if cookiecutter.frontend == 'stenciljs' %}
+    command: "npm start --host 0.0.0.0 --port 4200 --no-open"
+    {% elif cookiecutter.frontend == 'angular' %}
+    command: "./node_modules/.bin/ng serve --host 0.0.0.0"
+    {% elif cookiecutter.frontend == 'react' %}
+    environment:
+      - HOST=0.0.0.0
+      - PORT=4200
+    command: "npm start --no-open"
+    {% endif %}
+    stdin_open: true
+    tty: true

@@ -1,0 +1,20 @@
+  
+
+  celery_worker_backend:
+    image: django-starter:latest
+    env_file: "server-prod.env"
+    command: >
+      sh -c "/home/app/server/entrypoint.sh &&
+             /home/app/server/wait-for-it.sh rabbitmq_server:5672:5672 &&
+             celery -A backend worker -l info"
+    volumes:
+      - .:/home/app/server
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s

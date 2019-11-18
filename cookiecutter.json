@@ -1,0 +1,10 @@
+{
+  "project_name": "Base Project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '').replace('-', '_') }}",
+  "domain_main": "{{cookiecutter.project_slug}}.com",
+  "backend": ["fastapi", "flask", "django"],
+  "frontend": ["react", "stenciljs", "angular", "ninguno"],
+  "reverse_proxy": ["nginx", "traefik"],
+  "reverse_proxy_host": "{{ cookiecutter.domain_main }}",
+  "reverse_proxy_mail": "admin@{{cookiecutter.domain_main}}"
+}

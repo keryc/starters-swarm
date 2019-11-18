@@ -1,0 +1,20 @@
+
+
+  django_backend:
+    image: django-starter:latest
+    env_file: 'server-prod.env'
+    volumes:
+      - ./static:/home/app/server/static
+      - ./media:/home/app/server/media
+    command: >
+      sh -c "/home/app/server/entrypoint.sh &&
+             gunicorn backend.wsgi -b 0.0.0.0:8000"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s  
